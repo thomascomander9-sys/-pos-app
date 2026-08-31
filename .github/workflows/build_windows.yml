@@ -15,18 +15,19 @@ jobs:
       with:
         channel: 'stable'
 
-    - name: Enable Windows Desktop
-      run: flutter config --enable-windows-desktop
+    - name: Enable Windows Desktop & Generate Project Files
+      run: |
+        flutter config --enable-windows-desktop
+        flutter create . --platforms=windows
 
     - name: Install dependencies
       run: flutter pub get
 
-    - name: Build Windows
+    - name: Build Windows Executable
       run: flutter build windows --release
 
-    - name: Upload Executable
+    - name: Upload Executable Artifact
       uses: actions/upload-artifact@v4
       with:
         name: POS-App-Windows
-        path: build/windows/runner/Release/
-
+        path: build/windows/x64/runner/Release/
