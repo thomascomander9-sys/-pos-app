@@ -68,7 +68,7 @@ class _SalesScreenState extends State<SalesScreen> {
       ),
       body: Row(
         children: [
-          // قسم المنتجات (اليسار/اليمين حسب اللغة)
+          // قسم المنتجات
           Expanded(
             flex: 2,
             child: _products.isEmpty
@@ -106,7 +106,7 @@ class _SalesScreenState extends State<SalesScreen> {
                     },
                   ),
           ),
-          
+
           const VerticalDivider(width: 1),
 
           // قسم سلة المشتريات والحساب
@@ -116,8 +116,10 @@ class _SalesScreenState extends State<SalesScreen> {
               children: [
                 const Padding(
                   padding: EdgeInsets.all(8.0),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  child: Text('سلة المشتريات'),
+                  child: Text(
+                    'سلة المشتريات',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
                 ),
                 Expanded(
                   child: ListView.builder(
@@ -140,9 +142,17 @@ class _SalesScreenState extends State<SalesScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('الإجمالي:', style: TextStyle(fontWeight: FontWeight.bold)),
-                          Text('${_totalAmount.toStringAsFixed(2)} ر.س',
-                              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.teal)),
+                          const Text(
+                            'الإجمالي:',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            '${_totalAmount.toStringAsFixed(2)} ر.س',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.teal,
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 8),
@@ -164,4 +174,3 @@ class _SalesScreenState extends State<SalesScreen> {
     );
   }
 }
-
