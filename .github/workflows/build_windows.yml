@@ -1,4 +1,4 @@
-name: Build Windows Exe
+namename: Build Windows Exe
 
 on:
   workflow_dispatch:
@@ -15,10 +15,10 @@ jobs:
       with:
         channel: 'stable'
 
-    - name: Enable Windows Desktop
+    - name: Enable & Create Windows Desktop Support
       run: |
         flutter config --enable-windows-desktop
-        flutter doctor -v
+        flutter create --platforms=windows .
 
     - name: Install dependencies
       run: flutter pub get
