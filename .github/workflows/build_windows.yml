@@ -8,26 +8,34 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        channel: 'stable'
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
 
-    - name: Enable & Create Windows Desktop Support
-      run: |
-        flutter config --enable-windows-desktop
-        flutter create --platforms=windows .
+      - name: Enable & Create Windows Desktop Support
+        run: |
+          flutter config --enable-windows-desktop
+          flutter create . --platforms=windows
 
-    - name: Install dependencies
-      run: flutter pub get
+      - name: Install dependencies
+        run: flutter pub get
 
-    - name: Build Windows Executable
-      run: flutter build windows --release
+      - name: Build Windows Executable
+        run: flutter build windows --release
 
-    - name: Upload Executable Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: POS-App-Windows
-        path: build/windows/x64/runner/Release/
+      - name: Bundle Visual C++ Redistributable DLLs
+        shell: powershell
+        run: |
+          Copy-Item "C:\Windows\System32\msvcp140.dll" -Destination "build\windows\x64\runner\Release\" -ErrorAction SilentlyContinue
+          Copy-Item "C:\Windows\System32\vcruntime140.dll" -Destination "build\windows\x64\runner\Release\" -ErrorAction SilentlyContinue
+          Copy-Item "C:\Windows\System32\vcruntime140_1.dll" -Destination "build\windows\x64\runner\Release\" -ErrorAction SilentlyContinue
+
+      - name: Upload Executable Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: POS-App-Windows
+          path: build\windows\x64\runner\Release\
