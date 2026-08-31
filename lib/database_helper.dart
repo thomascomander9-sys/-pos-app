@@ -5,7 +5,9 @@ class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
   static Database? _database;
 
+  // للوصول عبر DatabaseHelper() أو DatabaseHelper.instance
   factory DatabaseHelper() => _instance;
+  static DatabaseHelper get instance => _instance;
 
   DatabaseHelper._internal();
 
@@ -33,6 +35,35 @@ class DatabaseHelper {
         stock INTEGER
       )
     ''');
+
+    await db.execute('''
+      CREATE TABLE invoices(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        total REAL,
+        date TEXT
+      )
+    ''');
+  }
+
+  // --- الدوال المطلوبة لتصحيح الأخطاء ---
+
+  Future<List<Map<String, dynamic>>> getProducts() async {
+    final db = await database;
+    return await db.query('products');
+  }
+
+  Future<int> insertProduct(Map<String, dynamic> row) async {
+    final db = await database;
+    return await db.insert('products', row);
+  }
+
+  Future<int> deleteProduct(int id) async {
+    final db = await database;
+    return await db.delete('products', where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<List<Map<String, dynamic>>> getInvoices() async {
+    final db = await database;
+    return await db.query('invoices');
   }
 }
-
