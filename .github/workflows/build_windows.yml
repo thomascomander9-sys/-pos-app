@@ -15,10 +15,10 @@ jobs:
       with:
         channel: 'stable'
 
-    - name: Enable Windows Desktop & Generate Project Files
+    - name: Enable Windows Desktop
       run: |
         flutter config --enable-windows-desktop
-        flutter create . --platforms=windows
+        flutter doctor -v
 
     - name: Install dependencies
       run: flutter pub get
